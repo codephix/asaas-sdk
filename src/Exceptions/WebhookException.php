@@ -6,7 +6,7 @@
  * and open the template in the editor.
  */
 
-namespace codephix\Asaas\Exceptions;
+namespace CodePhix\Asaas\Exceptions;
 
 /**
  * Description of WebhookException

@@ -1,6 +1,6 @@
 <?php
 
-namespace codephix\Asaas\Exceptions;
+namespace CodePhix\Asaas\Exceptions;
 
 use Exception;
 

@@ -1,12 +1,12 @@
 <?php
 
-namespace codephix\Asaas;
+namespace CodePhix\Asaas;
 
-use codephix\Asaas\Assinatura;
-use codephix\Asaas\Cliente;
-use codephix\Asaas\Cobranca;
-use codephix\Asaas\Notificacao;
-use codephix\Asaas\Webhook;
+use CodePhix\Asaas\Assinatura;
+use CodePhix\Asaas\Cliente;
+use CodePhix\Asaas\Cobranca;
+use CodePhix\Asaas\Notificacao;
+use CodePhix\Asaas\Webhook;
 
 class Asaas {
     

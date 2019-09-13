@@ -1,8 +1,8 @@
 <?php
 
-namespace codephix\Asaas;
+namespace CodePhix\Asaas;
 
-use codephix\Asaas\Connection;
+use CodePhix\Asaas\Connection;
 
 class Cobranca {
     public $http;

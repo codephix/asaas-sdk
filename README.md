@@ -3,27 +3,19 @@
 SDK não-oficial de integração á API do serviço www.asaas.com
 
 [![Maintainer](http://img.shields.io/badge/maintainer-@codephix-blue.svg?style=flat-square)](https://twitter.com/codephix)
-[![Source Code](http://img.shields.io/badge/source-codephix/asaas-blue.svg?style=flat-square)](https://github.com/codephix/asaas)
-[![PHP from Packagist](https://img.shields.io/packagist/php-v/codephix/asaas.svg?style=flat-square)](https://packagist.org/packages/codephix/asaas)
-[![Latest Version](https://img.shields.io/github/release/codephix/asaas.svg?style=flat-square)](https://github.com/codephix/asaas/releases)
+[![Source Code](http://img.shields.io/badge/source-codephix/asaas-sdk-blue.svg?style=flat-square)](https://github.com/codephix/asaas-sdk)
+[![PHP from Packagist](https://img.shields.io/packagist/php-v/codephix/asaas-sdk.svg?style=flat-square)](https://packagist.org/packages/codephix/asaas-sdk)
+[![Latest Version](https://img.shields.io/github/release/codephix/asaas-sdk.svg?style=flat-square)](https://github.com/codephix/asaas-sdk/releases)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE)
-[![Build](https://img.shields.io/scrutinizer/build/g/codephix/asaas.svg?style=flat-square)](https://scrutinizer-ci.com/g/codephix/asaas)
-[![Quality Score](https://img.shields.io/scrutinizer/g/codephix/asaas.svg?style=flat-square)](https://scrutinizer-ci.com/g/codephix/asaas)
-[![Total Downloads](https://img.shields.io/packagist/dt/codephix/asaas.svg?style=flat-square)](https://packagist.org/packages/codephix/asaas)
+[![Build](https://img.shields.io/scrutinizer/build/g/codephix/asaas-sdk.svg?style=flat-square)](https://scrutinizer-ci.com/g/codephix/asaas-sdk)
+[![Quality Score](https://img.shields.io/scrutinizer/g/codephix/asaas-sdk.svg?style=flat-square)](https://scrutinizer-ci.com/g/codephix/asaas-sdk)
+[![Total Downloads](https://img.shields.io/packagist/dt/codephix/asaas-sdk.svg?style=flat-square)](https://packagist.org/packages/codephix/asaas-sdk)
 
 
 ### Projeto em andamento
 
 
 ## Installation
-
-Asaas is available via Composer:
-
-```bash
-"codephix/asaas-sdk": "^1.0"
-```
-
-or run
 
 ```bash
 composer require codephix/asaas-sdk
@@ -76,22 +68,25 @@ Clientes
 
 ```php
 // Retorna a listagem de clientes
-$clientes = $asaas->customer()->getAll(array $filtros);
+$clientes = $asaas->cliente()->getAll(array $filtros);
 
 // Retorna os dados do cliente de acordo com o Id
-$cobranca = $asaas->customer()->getById(123);
+$cobranca = $asaas->cliente()->getById(123);
 
 // Retorna os dados do cliente de acordo com o Email
-$clientes = $asaas->customer()->getByEmail('email@mail.com');
+$clientes = $asaas->cliente()->getByEmail('email@mail.com');
 
 // Insere um novo cliente
-$cobranca = $asaas->customer()->create(array $dadosCliente);
+$clientes = $asaas->cliente()->create(array $dadosCliente);
 
 // Atualiza os dados do cliente
-$cobranca = $asaas->customer()->update(123, array $dadosCliente);
+$clientes = $asaas->cliente()->update(123, array $dadosCliente);
+
+// Restaura um cliente
+$asaas->cliente()->restaura(123);
 
 // Deleta uma cliente
-$asaas->customer()->delete(123);
+$asaas->cliente()->delete(123);
 ```
 
 
@@ -100,25 +95,41 @@ Cobranças
 
 ```php
 // Retorna a listagem de cobranças
-$cobrancas = $asaas->payment()->getAll(array $filtros);
+$cobrancas = $asaas->cobranca()->getAll(array $filtros);
 
 // Retorna os dados da cobrança de acordo com o Id
-$cobranca = $asaas->payment()->getById(123);
+$cobranca = $asaas->cobranca()->getById(123);
 
 // Retorna a listagem de cobranças de acordo com o Id do Cliente
-$cobrancas = $asaas->payment()->getByCustomer($customer_id);
+$cobrancas = $asaas->cobranca()->getByCustomer($customer_id);
 
 // Retorna a listagem de cobranças de acordo com o Id da Assinaturas
-$cobrancas = $asaas->payment()->getBySubscription($subscription_id);
+$cobrancas = $asaas->cobranca()->getBySubscription($subscription_id);
 
 // Insere uma nova cobrança
-$cobranca = $asaas->payment()->create(array $dadosCobranca);
+$cobranca = $asaas->cobranca()->create(array $dadosCobranca);
+
+// Insere uma nova cobrança parcelada
+$cobranca = $asaas->cobranca()->parcelada(array $dadosCobranca);
+
+// Insere uma nova cobrança com split 
+/* Saldo dividido em multiplas contas do Asaas*/
+$cobranca = $asaas->cobranca()->parcelada(array $dadosCobranca);
 
 // Atualiza os dados da cobrança
-$cobranca = $asaas->payment()->update(123, array $dadosCobranca);
+$cobranca = $asaas->cobranca()->update(123, array $dadosCobranca);
+
+// Restaura cobrança removida
+$cobranca = $asaas->cobranca()->restore(id);
+
+// Estorna cobrança
+$cobranca = $asaas->cobranca()->estorno(id);
+
+// Confirmação em dinheiro
+$cobranca = $asaas->cobranca()->confirmacao(id);
 
 // Deleta uma cobrança
-$asaas->payment()->delete(123);
+$asaas->cobranca()->delete(123);
 ```
 
 
@@ -126,23 +137,124 @@ Assinaturas
 ------------
 
 ```php
+
+
+
+Os status possíveis de uma cobrança são os seguintes:
+
+[PENDING] - Aguardando pagamento
+
+[RECEIVED] - Recebida (saldo já creditado na conta)
+
+[CONFIRMED] - Pagamento confirmado (saldo ainda não creditado)
+
+[OVERDUE] - Vencida
+
+[REFUNDED] - Estornada
+
+[RECEIVED_IN_CASH] - Recebida em dinheiro (não gera saldo na conta)
+
+[REFUND_REQUESTED] - Estorno Solicitado
+
+[CHARGEBACK_REQUESTED] - Recebido chargeback
+
+[CHARGEBACK_DISPUTE] - Em disputa de chargeback (caso sejam apresentados documentos para contestação)
+
+[AWAITING_CHARGEBACK_REVERSAL] - Disputa vencida, aguardando repasse da adquirente
+
+[DUNNING_REQUESTED] - Em processo de recuperação
+
+[DUNNING_RECEIVED] - Recuperada
+
+[AWAITING_RISK_ANALYSIS] - Pagamento em análise
+
+
 // Retorna a listagem de assinaturas
-$assinaturas = $asaas->subscription()->getAll(array $filtros);
+$assinaturas = $asaas->assinatura()->getAll(array $filtros);
 
 // Retorna os dados da assinatura de acordo com o Id
-$assinatura = $asaas->subscription()->getById(123);
+$assinatura = $asaas->assinatura()->getById(123);
 
 // Retorna a listagem de assinaturas de acordo com o Id do Cliente
-$assinaturas = $asaas->subscription()->getByCustomer($customer_id);
+$assinaturas = $asaas->assinatura()->getByCustomer($customer_id);
 
 // Insere uma nova assinatura
-$assinatura = $asaas->subscription()->create(array $dadosAssinatura);
+
+/*
+
+Assinatura via Boleto
+
+$dadosAssinatura = array(
+  "customer" => "{CUSTOMER_ID}",
+  "billingType" => "BOLETO",
+  "nextDueDate" => "2017-05-15",
+  "value" => 19.9,
+  "cycle" => "MONTHLY",
+  "description" => "Assinatura Plano Pró",
+  "discount" => array(
+    "value" => 10,
+    "dueDateLimitDays" => 0
+  ),
+  "fine" => array(
+    "value": 1
+  ),
+  "interest" => array(
+    "value": 2
+  )
+);
+
+
+Assinatura via cartão de credito
+
+
+$dadosAssinatura = array(
+  "customer" => "{CUSTOMER_ID}",
+  "billingType" => "CREDIT_CARD",
+  "nextDueDate" => "2017-05-15",
+  "value" => 19.9,
+  "cycle" => "MONTHLY",
+  "description" => "Assinatura Plano Pró",
+  "creditCard" => array(
+    "holderName" => "marcelo h almeida",
+    "number" => "5162306219378829",
+    "expiryMonth" => "05",
+    "expiryYear" => "2021",
+    "ccv" => "318"
+  ),
+  "creditCardHolderInfo" => array(
+    "name" => "Marcelo Henrique Almeida",
+    "email" => "marcelo.almeida@gmail.com",
+    "cpfCnpj" => "24971563792",
+    "postalCode" => "89223-005",
+    "addressNumber" => "277",
+    "addressComplement" => null,
+    "phone" => "4738010919",
+    "mobilePhone" => "47998781877"
+  )
+);
+
+*/
+
+$assinatura = $asaas->assinatura()->create(array $dadosAssinatura);
 
 // Atualiza os dados da assinatura
-$assinatura = $asaas->subscription()->update(123, array $dadosAssinatura);
+$assinatura = $asaas->assinatura()->update(123, array $dadosAssinatura);
+
+Listar notas fiscais das cobranças de uma assinatura
+
+/*
+
+$parametos = array(
+'offset' => '',
+'limit' => '',
+'status' => '',
+
+*/
+
+$assinatura = $asaas->assinatura()->getNotaFiscal($id, array $parametos);
 
 // Deleta uma assinatura
-$asaas->subscription()->delete(123);
+$asaas->assinatura()->delete(123);
 ```
 
 
@@ -151,22 +263,22 @@ Notificações
 
 ```php
 // Retorna a listagem de notificações
-$notificacoes = $asaas->notification()->getAll(array $filtros);
+$notificacoes = $asaas->notificacao()->getAll(array $filtros);
 
 // Retorna os dados da notificação de acordo com o Id
-$notificacao = $asaas->notification()->getById(123);
+$notificacao = $asaas->notificacao()->getById(123);
 
 // Retorna a listagem de notificações de acordo com o Id do Cliente
-$notificacoes = $asaas->notification()->getByCustomer($customer_id);
+$notificacoes = $asaas->notificacao()->getByCustomer($customer_id);
 
 // Insere uma nova notificação
-$notificacao = $asaas->notification()->create(array $dadosNotificacao);
+$notificacao = $asaas->notificacao()->create(array $dadosNotificacao);
 
 // Atualiza os dados da notificação
-$notificacao = $asaas->notification()->update(123, array $dadosNotificacao);
+$notificacao = $asaas->notificacao()->update(123, array $dadosNotificacao);
 
 // Deleta uma notificação
-$asaas->notification()->delete(123);
+$asaas->notificacao()->delete(123);
 ```
 
 
@@ -190,7 +302,7 @@ Obs.: Esta é uma API não oficial. Foi feita com base na documentação disponi
 
 ## Contributing
 
-Please see [CONTRIBUTING](https://github.com/codephix/router/blob/master/CONTRIBUTING.md) for details.
+Please see [CONTRIBUTING](https://github.com/codephix/asaas-sdk/blob/master/CONTRIBUTING.md) for details.
 
 
 Creditos
@@ -202,7 +314,7 @@ Creditos
 Suporte
 -------
 
-[Para reportar um novo bug por favor abra um novo Issue no github](https://github.com/codephix/asaas/issues)
+[Para reportar um novo bug por favor abra um novo Issue no github](https://github.com/codephix/asaas-sdk/issues)
 
 
 ## Support

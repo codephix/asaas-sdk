@@ -1,6 +1,6 @@
 <?php
 
-namespace codephix\Asaas;
+namespace CodePhix\Asaas;
 
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 

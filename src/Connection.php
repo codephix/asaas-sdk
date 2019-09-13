@@ -1,6 +1,6 @@
 <?php
 
-namespace codephix\Asaas;
+namespace CodePhix\Asaas;
 
 class Connection {
     
