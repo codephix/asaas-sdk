@@ -1,68 +1,26 @@
 <?php
 
-namespace CodePhix\Asaas;
+namespace codephix\Asaas;
 
-/**
- * Class CodePhix Asaas
- *
- * @author Max Alex <https://github.com/codephix>
- * @package CodePhix\Asaas
- */
-class Asaas extends Dispatch
-{
-    /**
-     * Router constructor.
-     *
-     * @param string $projectUrl
-     * @param null|string $separator
-     */
-    public function __construct(string $projectUrl, ?string $separator = ":")
-    {
-        parent::__construct($projectUrl, $separator);
-    }
+use codephix\Asaas\Assinatura;
+use codephix\Asaas\Cliente;
+use codephix\Asaas\Cobranca;
+use codephix\Asaas\Notificacao;
+use codephix\Asaas\Webhook;
 
-    /**
-     * @param string $route
-     * @param string|callable $handler
-     */
-    public function post(string $route, $handler): void
-    {
-        $this->addRoute("POST", $route, $handler);
-    }
-
-    /**
-     * @param string $route
-     * @param string|callable $handler
-     */
-    public function get(string $route, $handler): void
-    {
-        $this->addRoute("GET", $route, $handler);
-    }
-
-    /**
-     * @param string $route
-     * @param string|callable $handler
-     */
-    public function put(string $route, $handler): void
-    {
-        $this->addRoute("PUT", $route, $handler);
-    }
-
-    /**
-     * @param string $route
-     * @param string|callable $handler
-     */
-    public function patch(string $route, $handler): void
-    {
-        $this->addRoute("PATCH", $route, $handler);
-    }
-
-    /**
-     * @param string $route
-     * @param string|callable $handler
-     */
-    public function delete(string $route, $handler): void
-    {
-        $this->addRoute("DELETE", $route, $handler);
+class Asaas {
+    
+    public $assinatura;
+    public $cliente;
+    public $cobranca;
+    public $notificacao;
+    public $webhook;
+    
+    public function __construct() {
+        $this->assinatura  = new Assinatura;
+        $this->cliente     = new Cliente;
+        $this->cobranca    = new Cobranca;
+        $this->notificacao = new Notificacao;
+        $this->webhook     = new Webhook;
     }
 }
