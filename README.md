@@ -36,20 +36,10 @@ Exemplo
 
 require 'vendor/autoload.php';
 
-use Softr\Asaas\Adapter\BuzzAdapter;
-use Softr\Asaas\Adapter\GuzzleAdapter;
-use Softr\Asaas\Adapter\GuzzleHttpAdapter;
-use Softr\Asaas\Asaas;
-
-// Instancie o adapter usando o token de acesso
-$adapter = new BuzzAdapter('seu_token_de_acesso');
-ou
-$adapter = new GuzzleAdapter('seu_token_de_acesso');
-ou
-$adapter = new GuzzleHttpAdapter('seu_token_de_acesso');
+use CodePhix\Asaas;
 
 // Instancie o cliente Asaas usando a instância do adapter previamente criada.
-$asaas = new Asaas($adapter);
+$asaas = new Asaas('seu_token_de_acesso');
 ```
 
 Endpoint
@@ -59,7 +49,7 @@ Caso queira usar a API em modo teste basta especificar o `ambiente` no momento e
 
 ```php
 // Obs.: Caso não seja informado o segundo parâmetro a API entra em modo de produção
-$asaas = new Asaas($adapter, 'producao|homologacao');
+$asaas = new Asaas('seu_token_de_acesso', 'producao|homologacao');
 ```
 
 
