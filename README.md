@@ -20,13 +20,13 @@ SDK não-oficial de integração á API do serviço www.asaas.com
 Asaas is available via Composer:
 
 ```bash
-"codephix/asaas": "^1.0"
+"codephix/asaas-sdk": "^1.0"
 ```
 
 or run
 
 ```bash
-composer require codephix/asaas
+composer require codephix/asaas-sdk
 ```
 
 
