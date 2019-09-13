@@ -29,7 +29,7 @@ class Cobranca {
                 $filtro = '?'.$filtro;
             }
         }
-        return $this->http->get('/payments'.$filtro);
+        return $this->http->get('/cities'.$filtro);
     }
 
     // Retorna os dados da cobrança de acordo com o Id
@@ -71,6 +71,7 @@ class Cobranca {
     // Atualiza os dados da cobrança
     public function update($id, array $dadosCobranca){
 
+        return $this->http->post('/payments/' . $id, $dadosCliente);
     }
 
     // Restaura cobrança removida

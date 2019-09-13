@@ -21,13 +21,6 @@ SDK não-oficial de integração á API do serviço www.asaas.com
 composer require codephix/asaas-sdk
 ```
 
-
-
-Adapters
---------
-
-Você pode usar os seguintes `adapters` para usar na sua aplicação: `BuzzAdapter`, `GuzzleAdapter` e `GuzzleHttpAdapter`;
-
 Exemplo
 -------
 
@@ -269,18 +262,6 @@ $notificacao = $asaas->notificacao()->update(123, array $dadosNotificacao);
 
 // Deleta uma notificação
 $asaas->notificacao()->delete(123);
-```
-
-
-Cidades
-------
-
-```php
-// Retorna a listagem de cidades
-$cidades = $asaas->city()->getAll(array $filtros);
-
-// Retorna os dados da cidade de acordo com o Id
-$action123 = $asaas->city()->getById(123);
 ```
 
 Documentação Oficial
