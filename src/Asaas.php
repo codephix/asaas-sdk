@@ -16,11 +16,13 @@ class Asaas {
     public $notificacao;
     public $webhook;
     
-    public function __construct() {
-        $this->assinatura  = new Assinatura;
-        $this->cliente     = new Cliente;
-        $this->cobranca    = new Cobranca;
-        $this->notificacao = new Notificacao;
-        $this->webhook     = new Webhook;
+    public function __construct($token, $status = 'producao') {
+        $connection = new Connection($token, $status);
+
+        $this->assinatura  = new Assinatura($connection);
+        $this->cliente     = new Cliente($connection);
+        $this->cobranca    = new Cobranca($connection);
+        $this->notificacao = new Notificacao($connection);
+        $this->webhook     = new Webhook($connection);
     }
 }

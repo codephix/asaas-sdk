@@ -3,19 +3,25 @@
 namespace CodePhix\Asaas;
 
 class Connection {
-    
     public $http;
     public $api_key;
-    public $api_key_live;
     public $api_status;
     public $base_url;
     public $headers;
 
-    public function __construct() {
-        $this->api_key = PAYMENT['asaas']['chave'];
-        $this->api_key_live = PAYMENT['asaas']['chavelivre'];
-        $this->api_status = PAYMENT['asaas']['status'];
-        $this->base_url = "https://" . ((PAYMENT['asaas']['status']) ? 'sandbox' : 'www');
+    public function __construct($token, $status) {
+
+        if($status == 'producao'){
+            $this->api_status = false;
+        }elseif($status == 'homologacao'){
+            $this->api_status = 1;
+        }else{
+            die('Tipo de homologação invalida');
+        }
+        $this->api_key = $token;
+        //$this->api_status = PAYMENT['asaas']['status'];
+        $this->base_url = "https://" . (($this->api_status) ? 'sandbox' : 'www');
+
         return $this;
     }
 
@@ -34,7 +40,7 @@ class Connection {
 
         curl_setopt($ch, CURLOPT_HTTPHEADER, array(
             "Content-Type: application/json",
-            "access_token: ".(($this->api_status == 1) ? $this->api_key_live : $this->api_key)
+            "access_token: ".$this->api_key
         ));
 
         $response = curl_exec($ch);
@@ -45,7 +51,7 @@ class Connection {
 
         return $response;
     }
-    
+
     public function post($url, $params)
     {
         $params = json_encode($params);
@@ -61,7 +67,7 @@ class Connection {
 
         curl_setopt($ch, CURLOPT_HTTPHEADER, array(
             "Content-Type: application/json",
-            "access_token: ".(($this->api_status == 1) ? $this->api_key_live : $this->api_key)
+            "access_token: ".$this->api_key
         ));
 
         $response = curl_exec($ch);

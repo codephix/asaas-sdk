@@ -38,9 +38,9 @@ class Cliente
     public $cli;
 
     
-    public function __construct()
+    public function __construct(Connection $connection)
     {
-        $this->http = new Connection;
+        $this->http = $connection;
     }
     
     /**
@@ -54,7 +54,21 @@ class Cliente
 
     // Retorna a listagem de clientes
     public function getAll($filtros = false){
-        return $this->http->get('/customers');
+        $filtro = '';
+        if(is_array($filtros)){
+            if($filtros){
+                foreach($filtros as $key => $f){
+                    if(!empty($f)){
+                        if($filtro){
+                            $filtro .= '&';
+                        }
+                        $filtro .= $key.'='.$f;
+                    }
+                }
+                $filtro = '?'.$filtro;
+            }
+        }
+        return $this->http->get('/customers'.$filtro);
     }
 
     // Retorna os dados do cliente de acordo com o Id
