@@ -6,6 +6,7 @@ use CodePhix\Asaas\Assinatura;
 use CodePhix\Asaas\Cliente;
 use CodePhix\Asaas\Cobranca;
 use CodePhix\Asaas\Notificacao;
+use CodePhix\Asaas\Transferencia;
 use CodePhix\Asaas\Webhook;
 
 class Asaas {
