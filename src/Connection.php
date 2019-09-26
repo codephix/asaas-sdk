@@ -30,7 +30,7 @@ class Connection {
     {
 
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $this->base_url .'.asaas.com/api/v3'. $url."?".$option);
+        curl_setopt($ch, CURLOPT_URL, $this->base_url .'.asaas.com/api/v3'. $url.$option);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
         curl_setopt($ch, CURLOPT_HEADER, FALSE);
 
