@@ -29,7 +29,7 @@ class Cobranca {
                 $filtro = '?'.$filtro;
             }
         }
-        return $this->http->get('/cities'.$filtro);
+        return $this->http->get('/payments'.$filtro);
     }
 
     // Retorna os dados da cobrança de acordo com o Id
