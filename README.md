@@ -267,7 +267,7 @@ $asaas->notificacao()->delete(123);
 Documentação Oficial
 --------------------
 
-Obs.: Esta é uma API não oficial. Foi feita com base na documentação disponibilizada [neste link](https://docs.google.com/document/d/1XUJRHY_0nd45CzFK5EmjDK92qgaQJGMxT0rjZriTk-g).
+Obs.: Esta é uma API não oficial. Foi feita com base na documentação disponibilizada [neste link](https://asaasv3.docs.apiary.io/).
 
 
 
@@ -299,8 +299,8 @@ Thank you
 ## Credits
 
 - [Max Alex](https://github.com/codephix) (Developer)
-- [All Contributors](https://github.com/codephix/router/contributors) (This Rock)
+- [All Contributors](https://github.com/codephix/asaas-sdk/contributors) (This Rock)
 
 ## License
 
-The MIT License (MIT). Please see [License File](https://github.com/codephix/asaas/blob/master/LICENSE) for more information.
+The MIT License (MIT). Please see [License File](https://github.com/codephix/asaas-sdk/blob/master/LICENSE) for more information.
