@@ -19,8 +19,8 @@ class Asaas {
     public $transferencia;
     public $webhook;
     
-    public function __construct($token, $status = 'producao') {
-        $connection = new Connection($token, $status);
+    public function __construct($token, $status = false) {
+        $connection = new Connection($token, ((!empty($status)) ? $status : 'producao'));
 
         $this->assinatura  = new Assinatura($connection);
         $this->cidade      = new Cidades($connection);
