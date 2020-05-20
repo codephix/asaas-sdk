@@ -71,7 +71,7 @@ class Cobranca {
     // Atualiza os dados da cobrança
     public function update($id, array $dadosCobranca){
 
-        return $this->http->post('/payments/' . $id, $dadosCliente);
+        return $this->http->post('/payments/' . $id, $dadosCobranca);
     }
 
     // Restaura cobrança removida
