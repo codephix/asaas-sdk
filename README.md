@@ -51,25 +51,25 @@ Clientes
 
 ```php
 // Retorna a listagem de clientes
-$clientes = $asaas->cliente()->getAll(array $filtros);
+$clientes = $asaas->cliente->getAll(array $filtros);
 
 // Retorna os dados do cliente de acordo com o Id
-$cobranca = $asaas->cliente()->getById(123);
+$cobranca = $asaas->cliente->getById(123);
 
 // Retorna os dados do cliente de acordo com o Email
-$clientes = $asaas->cliente()->getByEmail('email@mail.com');
+$clientes = $asaas->cliente->getByEmail('email@mail.com');
 
 // Insere um novo cliente
-$clientes = $asaas->cliente()->create(array $dadosCliente);
+$clientes = $asaas->cliente->create(array $dadosCliente);
 
 // Atualiza os dados do cliente
-$clientes = $asaas->cliente()->update(123, array $dadosCliente);
+$clientes = $asaas->cliente->update(123, array $dadosCliente);
 
 // Restaura um cliente
-$asaas->cliente()->restaura(123);
+$asaas->cliente->restaura(123);
 
 // Deleta uma cliente
-$asaas->cliente()->delete(123);
+$asaas->cliente->delete(123);
 ```
 
 
@@ -78,41 +78,41 @@ Cobranças
 
 ```php
 // Retorna a listagem de cobranças
-$cobrancas = $asaas->cobranca()->getAll(array $filtros);
+$cobrancas = $asaas->cobranca->getAll(array $filtros);
 
 // Retorna os dados da cobrança de acordo com o Id
-$cobranca = $asaas->cobranca()->getById(123);
+$cobranca = $asaas->cobranca->getById(123);
 
 // Retorna a listagem de cobranças de acordo com o Id do Cliente
-$cobrancas = $asaas->cobranca()->getByCustomer($customer_id);
+$cobrancas = $asaas->cobranca->getByCustomer($customer_id);
 
 // Retorna a listagem de cobranças de acordo com o Id da Assinaturas
-$cobrancas = $asaas->cobranca()->getBySubscription($subscription_id);
+$cobrancas = $asaas->cobranca->getBySubscription($subscription_id);
 
 // Insere uma nova cobrança
-$cobranca = $asaas->cobranca()->create(array $dadosCobranca);
+$cobranca = $asaas->cobranca->create(array $dadosCobranca);
 
 // Insere uma nova cobrança parcelada
-$cobranca = $asaas->cobranca()->parcelada(array $dadosCobranca);
+$cobranca = $asaas->cobranca->parcelada(array $dadosCobranca);
 
 // Insere uma nova cobrança com split 
 /* Saldo dividido em multiplas contas do Asaas*/
-$cobranca = $asaas->cobranca()->parcelada(array $dadosCobranca);
+$cobranca = $asaas->cobranca->parcelada(array $dadosCobranca);
 
 // Atualiza os dados da cobrança
-$cobranca = $asaas->cobranca()->update(123, array $dadosCobranca);
+$cobranca = $asaas->cobranca->update(123, array $dadosCobranca);
 
 // Restaura cobrança removida
-$cobranca = $asaas->cobranca()->restore(id);
+$cobranca = $asaas->cobranca->restore(id);
 
 // Estorna cobrança
-$cobranca = $asaas->cobranca()->estorno(id);
+$cobranca = $asaas->cobranca->estorno(id);
 
 // Confirmação em dinheiro
-$cobranca = $asaas->cobranca()->confirmacao(id);
+$cobranca = $asaas->cobranca->confirmacao(id);
 
 // Deleta uma cobrança
-$asaas->cobranca()->delete(123);
+$asaas->cobranca->delete(123);
 ```
 
 
@@ -153,13 +153,13 @@ Os status possíveis de uma cobrança são os seguintes:
 
 
 // Retorna a listagem de assinaturas
-$assinaturas = $asaas->assinatura()->getAll(array $filtros);
+$assinaturas = $asaas->assinatura->getAll(array $filtros);
 
 // Retorna os dados da assinatura de acordo com o Id
-$assinatura = $asaas->assinatura()->getById(123);
+$assinatura = $asaas->assinatura->getById(123);
 
 // Retorna a listagem de assinaturas de acordo com o Id do Cliente
-$assinaturas = $asaas->assinatura()->getByCustomer($customer_id);
+$assinaturas = $asaas->assinatura->getByCustomer($customer_id);
 
 // Insere uma nova assinatura
 
@@ -218,10 +218,10 @@ $dadosAssinatura = array(
 
 */
 
-$assinatura = $asaas->assinatura()->create(array $dadosAssinatura);
+$assinatura = $asaas->assinatura->create(array $dadosAssinatura);
 
 // Atualiza os dados da assinatura
-$assinatura = $asaas->assinatura()->update(123, array $dadosAssinatura);
+$assinatura = $asaas->assinatura->update(123, array $dadosAssinatura);
 
 Listar notas fiscais das cobranças de uma assinatura
 
@@ -234,10 +234,10 @@ $parametos = array(
 
 */
 
-$assinatura = $asaas->assinatura()->getNotaFiscal($id, array $parametos);
+$assinatura = $asaas->assinatura->getNotaFiscal($id, array $parametos);
 
 // Deleta uma assinatura
-$asaas->assinatura()->delete(123);
+$asaas->assinatura->delete(123);
 ```
 
 
@@ -246,22 +246,22 @@ Notificações
 
 ```php
 // Retorna a listagem de notificações
-$notificacoes = $asaas->notificacao()->getAll(array $filtros);
+$notificacoes = $asaas->notificacao->getAll(array $filtros);
 
 // Retorna os dados da notificação de acordo com o Id
-$notificacao = $asaas->notificacao()->getById(123);
+$notificacao = $asaas->notificacao->getById(123);
 
 // Retorna a listagem de notificações de acordo com o Id do Cliente
-$notificacoes = $asaas->notificacao()->getByCustomer($customer_id);
+$notificacoes = $asaas->notificacao->getByCustomer($customer_id);
 
 // Insere uma nova notificação
-$notificacao = $asaas->notificacao()->create(array $dadosNotificacao);
+$notificacao = $asaas->notificacao->create(array $dadosNotificacao);
 
 // Atualiza os dados da notificação
-$notificacao = $asaas->notificacao()->update(123, array $dadosNotificacao);
+$notificacao = $asaas->notificacao->update(123, array $dadosNotificacao);
 
 // Deleta uma notificação
-$asaas->notificacao()->delete(123);
+$asaas->notificacao->delete(123);
 ```
 
 Documentação Oficial
