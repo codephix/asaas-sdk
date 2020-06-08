@@ -90,7 +90,7 @@ class Cobranca {
             "paymentDate" => "2019-09-03",
             "value" => 100.00,
         );
-        return $this->http->post('/customers', $data);
+        return $this->http->post('/customers', $dados);
     }
 
     // Deleta uma cobrança
