@@ -39,7 +39,7 @@ class Notificacao {
     
     // Retorna a listagem de notificações de acordo com o Id do Cliente
     public function getByCustomer($customer_id){
-        return $this->http->get('/customers/'.$id.'/notifications');
+        return $this->http->get('/customers/'.$customer_id.'/notifications');
     }
     
     // Insere uma nova notificação
