@@ -7,7 +7,7 @@ use CodePhix\Asaas\Connection;
 class Cobranca {
     public $http;
     protected $cobranca;
-    
+
     public function __construct(Connection $connection)
     {
         $this->http = $connection;
@@ -57,40 +57,27 @@ class Cobranca {
         }
     }
 
-    // Insere uma nova cobrança parcelada
-    public function parcelada(array $dadosCobranca){
-
-    }
-
-    // Insere uma nova cobrança com split
-        /* Saldo dividido em multiplas contas do Asaas*/
-    public function split(array $dadosCobranca){
-
-    }
-
     // Atualiza os dados da cobrança
     public function update($id, array $dadosCobranca){
-
         return $this->http->post('/payments/' . $id, $dadosCobranca);
     }
 
     // Restaura cobrança removida
     public function restore($id){
-
+        return $this->http->post("/payments/{$id}/restore", []);
     }
 
     // Estorna cobrança
     public function estorno($id){
-
+        return $this->http->post("/payments/{$id}/refund", []);
     }
 
     // Confirmação em dinheiro
     public function confirmacao($id, $dados){
-        $data = array(
-            "paymentDate" => "2019-09-03",
-            "value" => 100.00,
+        return $this->http->post(
+            sprintf("/payments/%s/receiveInCash", $id),
+            $dados
         );
-        return $this->http->post('/customers', $dados);
     }
 
     // Deleta uma cobrança
@@ -107,7 +94,7 @@ class Cobranca {
     {
         // Preenche as informações da cobranca
         $cobranca = $this->setCobranca($dados);
-        
+
         // Faz o post e retorna array de resposta
         return $this->http->post('/payments', ['form_params' => $cobranca]);
     }
