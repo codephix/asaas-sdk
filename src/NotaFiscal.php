@@ -3,7 +3,7 @@
 namespace CodePhix\Asaas;
 
 
-class PagarConta {
+class NotaFiscal {
 
     public $http;
 
@@ -28,21 +28,32 @@ class PagarConta {
                 $filtro = '?'.$filtro;
             }
         }
-        return $this->http->get('/bill/'.$filtro);
-    }
-    public function getBy($id){
-        return $this->http->get('/bill/'.$id);
+        return $this->http->get('/invoices/'.$filtro);
     }
 
-    public function create($dadosConta){
-        return $this->http->post('/bill', $dadosConta);
+    public function getBy($id){
+        return $this->http->get('/invoices/'.$id);
+    }
+
+
+    public function ListMunicipalServices($parametos){
+        return $this->http->get('/invoices/municipalServices?description='.$parametos);
+    }
+
+    public function issueInvoice($id){
+        return $this->http->post('/invoices/'$id.'/authorize', arrat());
+    }
+
+    public function create($id){
+        return $this->http->post('/invoices', $dadosConta);
+    }
+
+    public function update($id, $dadosConta){
+        return $this->http->post('/invoices/'.$id, $dadosConta);
     }
 
     public function cancel($id){
-        return $this->http->post('/bill/'.$id.'/cancel', []);
+        return $this->http->post('/invoices/'.$id.'/cancel', []);
     }
 
-    public function simulate($dadosConta){
-        return $this->http->post('/bill/simulate', $dadosConta);
-    }
 }

@@ -54,7 +54,7 @@ Clientes
 $clientes = $asaas->Cliente()->getAll(array $filtros);
 
 // Retorna os dados do cliente de acordo com o Id
-$cobranca = $asaas->Cliente()->getById(123);
+$clientes = $asaas->Cliente()->getById(123);
 
 // Retorna os dados do cliente de acordo com o Email
 $clientes = $asaas->Cliente()->getByEmail('email@mail.com');
@@ -104,11 +104,126 @@ $cobranca = $asaas->Cobranca()->estorno(id);
 // Confirmação em dinheiro
 $cobranca = $asaas->Cobranca()->confirmacao(id);
 
+// Desfazer confirmação de recebimento em dinheiro
+$cobranca = $asaas->Cobranca()->confirmacao(id);
+
 // Deleta uma cobrança
 $asaas->Cobranca()->delete(123);
 ```
 
 
+
+Link de Pagamemto
+------------
+
+```php
+// Retorna a listagem de cobranças
+$LinkPagamento = $asaas->LinkPagamento()->getAll(array $filtros);
+
+// Retorna os dados da cobrança de acordo com o Id
+$LinkPagamento = $asaas->LinkPagamento()->getById($id);
+
+
+// Insere uma nova cobrança / cobrança parcelada / cobrança split
+$LinkPagamento = $asaas->LinkPagamento()->create(array $dadosLink);
+
+
+Body
+
+{
+  "name": "Venda de livros",
+  "description": "Qualquer livro por apenas R$: 50,00",
+  "endDate": "2021-02-05",
+  "value": 50,
+  "billingType": "UNDEFINED",
+  "chargeType": "DETACHED",
+  "dueDateLimitDays": 10,
+  "subscriptionCycle": null,
+  "maxInstallmentCount": 1
+}
+
+
+$dadosLink = array(
+    'name' => 'Nome do link de pagamentos -> String required',
+    'description' => 'Descrição do link de pagamentos -> String',
+    'endDate' => 'Data de encerramento, a partir desta data o seu link de pagamentos será desativado automaticamente',
+    'value' => 'Valor do link de pagamentos, caso não informado o pagador poderá informar o quanto deseja pagar',
+
+    /*
+      Forma de pagamento permitida
+
+      BOLETO -> Boleto Bancário
+      CREDIT_CARD -> Cartão de Crédito
+      UNDEFINED -> Perguntar ao Cliente
+
+    */
+
+    'billingType' => 'UNDEFINED', //required
+
+
+    /*
+      Forma de cobrança
+
+      DETACHED -> Avulsa
+      RECURRENT -> Assinatura
+      INSTALLMENT -> Parcelamento
+
+    */
+
+    'chargeType' => 'DETACHED' //required
+
+
+    /*
+        Caso seja possível o pagamento via boleto bancário, define a quantidade de dias úteis que o seu cliente poderá pagar o boleto após gerado
+    */
+
+    'dueDateLimitDays' => '10',
+
+
+    /*
+    Periodicidade da cobrança, envio obrigatório caso a forma de cobrança selecionado seja Assinatura
+
+    WEEKLY -> Semanal
+    BIWEEKLY -> Quinzenal (2 semanas)
+    MONTHLY -> Mensal
+    QUARTERLY -> Trimestral
+    SEMIANNUALLY -> Semestral
+    YEARLY -> Anual
+
+    'subscriptionCycle' => 'MONTHLY',
+
+    */
+
+
+    /*
+    Quantidade máxima de parcelas que seu cliente poderá parcelar o valor do link de pagamentos caso a forma de cobrança selecionado seja Parcelamento. Caso não informado o valor padrão será de 1 parcela
+    */
+
+    'maxInstallmentCount' => '1'
+
+    
+
+
+);
+
+
+
+// Atualiza os dados da cobrança
+$LinkPagamento = $asaas->LinkPagamento()->update($id, array $dadosLink);
+
+// Restaura cobrança removida
+$LinkPagamento = $asaas->LinkPagamento()->restore(id);
+
+// Estorna cobrança
+$LinkPagamento = $asaas->LinkPagamento()->estorno(id);
+
+// Confirmação em dinheiro
+$LinkPagamento = $asaas->LinkPagamento()->confirmacao(id);
+
+// Deleta uma cobrança
+$asaas->LinkPagamento()->delete(123);
+
+```
 
 
 
@@ -376,6 +491,292 @@ Dados de retorno
 }
 
 
+
+```
+
+
+
+Consulta Serasa
+------------
+
+```php
+
+Retorna Lista 
+
+
+$ConsultaSerasa = $Asaas->ConsultaSerasa()->getAll($filtro);
+
+$filtro = array(   
+    'startDate' =>  'Filtrar a partir da data de criação -> String',
+    'endDate' => 'Filtrar até uma data de criação -> String',
+    'offset' => 'Elemento inicial da lista -> Number',
+    'limit' => 'Número de elementos da lista (max: 100) -> Number',
+);
+
+Dados de retorno
+
+{
+  "object": "list",
+  "hasMore": false,
+  "totalCount": 1,
+  "limit": 10,
+  "offset": 0,
+  "data": [
+    {
+      "id": "6c5e73fa-9efd-4a75-b60c-1cafb8d1c7ed",
+      "dateCreated": "2021-01-27",
+      "cpfCnpj": "05666663755",
+      "state": "SC",
+      "customer": "cus_000000001766",
+      "downloadUrl": "https://www.asaas.com.br/creditBureauReport/download/6c5e73fa-9efd-4a75-b60c-1cafb8d1c7ed"
+    }
+  ]
+}
+
+
+
+
+
+
+
+Cria uma consulta
+
+
+
+As consultas junto ao Serasa Experian são realizadas no momento da solicitação, para evitar possíveis percas de conexão, sugerimos um timeout de 30 segundos ou mais.
+
+Ao realizar a consulta será retornado o atributo reportFile contendo o PDF da consulta em Base64, este campo apenas é retornado no momento da criação da consulta, caso precise obte-lo novamente será necessário realizar o download por meio da url presente no campo downloadUrl.
+
+Para realizar a consulta você terá que informar um CPF ou CNPJ e o estado onde deseja realizar a consulta.
+
+Caso queira informar um cliente já cadastrado na sua conta Asaas:
+
+    Este deverá possuir um CPF ou CNPJ já cadastrado
+
+    O envio do estado se torna opcional caso já conste no cadastro do cliente
+
+
+
+
+$ConsultaSerasa = $Asaas->ConsultaSerasa()->create($dados);
+
+
+Parametros Create
+
+$dados = array(
+    'customer' = 'Identificador único do cliente no Asaas -> String',
+    'cpfCnpj' = 'CPF ou CNPJ do cliente. Informe este campo caso seu cliente não esteja cadastrado no Asaas -> String',
+    'state' = 'Estado em que deseja realizar a consulta. -> required EX: PE ou PB etc',
+)
+
+Consulta Valida até as 23:59 do dia da consulta 
+
+dados de retorno
+
+{
+  "id": "6c5e73fa-9efd-4a75-b60c-1cafb8d1c7ed",
+  "dateCreated": "2021-01-27",
+  "cpfCnpj": "05666663755",
+  "state": "SC",
+  "customer": "cus_000000001766",
+  "downloadUrl": "https://www.asaas.com.br/creditBureauReport/download/6c5e73fa-9efd-4a75-b60c-1cafb8d1c7ed"
+}
+
+
+
+Recupera consulta 
+
+$ConsultaSerasa = $Asaas->ConsultaSerasa()->getBy($id);
+
+Dados de retorno
+
+{
+  "id": "6c5e73fa-9efd-4a75-b60c-1cafb8d1c7ed",
+  "dateCreated": "2021-01-27",
+  "cpfCnpj": "05666663755",
+  "state": "SC",
+  "customer": "cus_000000001766",
+  "downloadUrl": "https://www.asaas.com.br/creditBureauReport/download/6c5e73fa-9efd-4a75-b60c-1cafb8d1c7ed"
+}
+
+
+```
+
+
+
+
+Nota Fiscal
+------------
+
+
+
+Possibilita que empresas (pessoa jurídica) emitam Notas Fiscais para seus clientes. É possível emitir uma Nota Fiscal atrelada a cobranças já existentes.
+
+Antes de emitir uma nota é necessário preencher as informações fiscais da sua conta. Clique aqui para entender como fazer isso.
+
+Os status possíveis de uma nota fiscal são os seguintes:
+
+SCHEDULED - Agendada
+
+SYNCHRONIZED - Enviada para prefeitura
+
+AUTHORIZED - Emitida
+
+PROCESSING_CANCELLATION - Processando cancelamento
+
+CANCELED - Cancelada
+
+CANCELLATION_DENIED - Cancelamento negado
+
+ERROR - Erro na emissão
+
+
+```php
+//Recuperar dados comerciais
+
+
+/*
+Parametros
+*/
+
+$dados = array(
+
+'effectiveDate[ge]' => 'Filtrar a partir de uma data de emissão -> Date (Y-m-d)',
+'effectiveDate[le]' => 'Filtrar até uma data de emissão -> String',
+'payment' => 'Filtrar pelo identificador único da cobrança -> String',
+'installment' => 'Filtrar pelo identificador único do parcelamento -> String',
+'externalReference' => 'Identificador da nota fiscal no seu sistema -> String',
+'status' => 'Filtrar por situação -> Enum',
+'offset' => 'Elemento inicial da lista -> Number',
+'limit' => 'Número de elementos da lista (max: 100) -> Number',
+
+
+);
+
+
+$NotaFiscal = $asaas->NotaFiscal()->getAll($dados);
+
+
+/*Agenda Nota Fiscal*/
+
+$dados = array(
+  "payment" => "pay_637959110194",
+  "installment" => null,
+  "serviceDescription" => "Nota fiscal da Fatura 101940. \nDescrição dos Serviços: ANÁLISE E DESENVOLVIMENTO DE SISTEMAS",
+  "observations" => "Mensal referente aos trabalhos de Junho.",
+  "value" => 300,
+  "deductions" => 0,
+  "effectiveDate" => "2018-07-03",
+  "externalReference" => null,
+  "taxes" => array(
+    "retainIss" => false,
+    "iss" => 3,
+    "cofins" => 3,
+    "csll" => 1,
+    "inss" => 0,
+    "ir" => 1.5,
+    "pis" => 0.65
+  ),
+  "municipalServiceId" => null,
+  "municipalServiceCode" => "1.01",
+  "municipalServiceName" => "Análise e desenvolvimento de sistemas"
+);
+
+
+$NotaFiscal = $asaas->NotaFiscal()->create($dados);
+/*Agenda Nota Fiscal*/
+
+$dados = array(
+  "serviceDescription" => "Nota fiscal da Fatura 101940. \nDescrição dos Serviços: ANÁLISE E DESENVOLVIMENTO DE SISTEMAS",
+  "observations" => "Mensal referente aos trabalhos de Junho.",
+  "value" => 300,
+  "deductions" => 0,
+  "effectiveDate" => "2018-07-03",
+  "externalReference" => null,
+  "taxes" => array(
+    "retainIss" => false,
+    "iss" => 3,
+    "cofins" => 3,
+    "csll" => 1,
+    "inss" => 0,
+    "ir" => 1.5,
+    "pis" => 0.65
+  ),
+);
+
+
+$NotaFiscal = $asaas->NotaFiscal()->update($dados);
+
+
+//Emitir Nota Fiscal
+$NotaFiscal = $asaas->NotaFiscal()->issueInvoice($id);
+
+//Listar serviços municipais
+$NotaFiscal = $asaas->NotaFiscal()->ListMunicipalServices($descricao);
+
+
+
+
+```
+
+
+
+
+Informações Fiscais
+------------
+
+
+```php
+//Recuperar Informações Fiscais
+$InformacoesFiscais = $asaas->InformacoesFiscais()->get();
+
+
+
+/*Cria e atualiza informações Fiscais*/
+
+$dados = array(
+  "object" => "customerFiscalInfo",
+  "simplesNacional" => false,
+  "rpsSerie" => "1",
+  "rpsNumber" => 1,
+  "loteNumber" => 1,
+  "username" => "usuario",
+  "specialTaxRegime" => "1",
+  "email" => "marcelo.almeida@gmail.com",
+  "serviceListItem" => null,
+  "cnae" => "6209100",
+  "culturalProjectsPromoter" => false,
+  "municipalInscription" => "21779501",
+  "stateInscription" => null,
+  "password" => "secret",
+  "accessToken" => null,
+  "certificateFile" => null,
+  "certificatePassword" => "secret"
+);
+
+
+$InformacoesFiscais = $asaas->InformacoesFiscais()->createUpdate($dados);
+
+
+//Listar configurações municipais
+
+$InformacoesFiscais = $asaas->NotaFiscal()->ListMunicipalConfigurations();
+
+
+```
+
+
+
+
+Minha Conta
+------------
+
+```php
+//Recuperar dados comerciais
+$MinhaConta = $asaas->MinhaConta()->get();
+
+// Recuperar configurações de personalização
+$MinhaConta = $asaas->MinhaConta()->getConf();
 
 ```
 
