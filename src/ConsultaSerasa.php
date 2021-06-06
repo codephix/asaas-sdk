@@ -3,7 +3,7 @@
 namespace CodePhix\Asaas;
 
 
-class PagarConta {
+class ConsultaSerasa {
 
     public $http;
 
@@ -28,21 +28,15 @@ class PagarConta {
                 $filtro = '?'.$filtro;
             }
         }
-        return $this->http->get('/bill/'.$filtro);
+        return $this->http->get('/creditBureauReport'.$filtro);
     }
+
     public function getBy($id){
-        return $this->http->get('/bill/'.$id);
+        return $this->http->get('/creditBureauReport/'.$id);
     }
 
-    public function create($dadosConta){
-        return $this->http->post('/bill', $dadosConta);
+    public function create($dados){
+        return $this->http->post('/creditBureauReport', $dados);
     }
 
-    public function cancel($id){
-        return $this->http->post('/bill/'.$id.'/cancel', []);
-    }
-
-    public function simulate($dadosConta){
-        return $this->http->post('/bill/simulate', $dadosConta);
-    }
 }

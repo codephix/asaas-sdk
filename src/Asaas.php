@@ -16,11 +16,17 @@ class Asaas {
     public $assinatura;
     public $cliente;
     public $cobranca;
+    public $LinkPagamento;
     public $notificacao;
     public $transferencia;
     public $webhook;
     public $antecipacao;
     public $extrato;
+    public $pagarconta;
+    public $NotaFiscal;
+    public $MinhaConta;
+    public $InformacoesFiscais;
+    public $ConsultaSerasa;
 
     private $connection;
     
@@ -31,11 +37,16 @@ class Asaas {
         $this->cidade = new Cidades($this->connection);
         $this->cliente     = new Cliente($this->connection);
         $this->cobranca    = new Cobranca($this->connection);
+        $this->LinkPagamento    = new LinkPagamento($this->connection);
         $this->notificacao = new Notificacao($this->connection);
         $this->transferencia = new Transferencia($this->connection);
         $this->extrato = new Extrato($this->connection);
         $this->antecipacao = new Antecipacao($this->connection);
         $this->pagarconta = new PagarConta($this->connection);
+        $this->NotaFiscal = new NotaFiscal($this->connection);
+        $this->MinhaConta = new MinhaConta($this->connection);
+        $this->InformacoesFiscais = new InformacoesFiscais($this->connection);
+        $this->ConsultaSerasa = new ConsultaSerasa($this->connection);
         $this->webhook     = new Webhook($this->connection);
     }
 
@@ -57,6 +68,11 @@ class Asaas {
     public function Cobranca(){
         $this->cobranca    = new Cobranca($this->connection);
         return $this->cobranca;
+    }
+    
+    public function LinkPagamento(){
+        $this->LinkPagamento    = new LinkPagamento($this->connection);
+        return $this->LinkPagamento;
     }
     
     public function Notificacao(){
@@ -82,6 +98,26 @@ class Asaas {
     public function PagarConta(){
         $this->pagarconta = new PagarConta($this->connection);
         return $this->pagarconta;
+    }
+
+    public function NotaFiscal(){
+        $this->NotaFiscal = new NotaFiscal($this->connection);
+        return $this->NotaFiscal;
+    }
+
+    public function InformacoesFiscais(){
+        $this->InformacoesFiscais = new InformacoesFiscais($this->connection);
+        return $this->InformacoesFiscais;
+    }
+
+    public function MinhaConta(){
+        $this->MinhaConta = new MinhaConta($this->connection);
+        return $this->MinhaConta;
+    }
+
+    public function ConsultaSerasa(){
+        $this->ConsultaSerasa = new ConsultaSerasa($this->connection);
+        return $this->ConsultaSerasa;
     }
     
     public function Webhook(){
