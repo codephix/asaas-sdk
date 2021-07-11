@@ -107,6 +107,14 @@ class Cliente
         return $this->http->get('/customers/'.$id,'','DELETE');
     }
 
+    // Atualiza os dados do cliente
+    public function restore($id){
+        if(empty($id)){
+            return false;
+        }else {
+            return $this->http->post('/customers/' . $id.'/restore', array());
+        }
+    }
 
 
 

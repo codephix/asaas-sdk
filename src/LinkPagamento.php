@@ -4,7 +4,7 @@ namespace CodePhix\Asaas;
 
 use CodePhix\Asaas\Connection;
 
-class Cobranca {
+class LinkPagamento {
     public $http;
     protected $cobranca;
 
@@ -29,22 +29,12 @@ class Cobranca {
                 $filtro = '?'.$filtro;
             }
         }
-        return $this->http->get('/payments'.$filtro);
+        return $this->http->get('/paymentLinks'.$filtro);
     }
 
     // Retorna os dados da cobrança de acordo com o Id
     public function getById($id){
-        return $this->http->get('/payments/'.$id);
-    }
-
-    // Retorna a listagem de cobranças de acordo com o Id do Cliente
-    public function getByCustomer($customer_id){
-        return $this->http->get('/payments?customer='.$customer_id);
-    }
-
-    // Retorna a listagem de cobranças de acordo com o Id da Assinaturas
-    public function getBySubscription($subscription_id){
-        return $this->http->get('/payments?subscription='.$subscription_id);
+        return $this->http->get('/paymentLinks/'.$id);
     }
 
     // Insere uma nova cobrança
@@ -53,51 +43,23 @@ class Cobranca {
         if(!empty($dadosCobranca['error'])){
             return $dadosCobranca;
         }else {
-            return $this->http->post('/payments', $dadosCobranca);
+            return $this->http->post('/paymentLinks', $dadosCobranca);
         }
     }
 
     // Atualiza os dados da cobrança
     public function update($id, array $dadosCobranca){
-        return $this->http->post('/payments/' . $id, $dadosCobranca);
+        return $this->http->post('/paymentLinks/' . $id, $dadosCobranca);
     }
 
     // Restaura cobrança removida
     public function restore($id){
-        return $this->http->post("/payments/{$id}/restore", []);
-    }
-
-    // Estorna cobrança
-    public function estorno($id){
-        return $this->http->post("/payments/{$id}/refund", []);
-    }
-
-    // Confirmação em dinheiro
-    public function confirmacao($id, $dados){
-        return $this->http->post("/payments/{$id}/receiveInCash", array());
-    }
-    // Confirmação em dinheiro
-    public function dezconfirmacao($id, $dados){
-        return $this->http->post("/payments/{$id}/undoReceivedInCash", array());
+        return $this->http->post("/paymentLinks/{$id}/restore", []);
     }
 
     // Deleta uma cobrança
     public function delete($id){
-        return $this->http->get('/payments/'.$id,'','DELETE');
-    }
-
-    /**
-     * Cria um novo boleto no Asaas.
-     * @param Array $cliente
-     * @return Boolean
-     */
-    public function create2($dados)
-    {
-        // Preenche as informações da cobranca
-        $cobranca = $this->setCobranca($dados);
-
-        // Faz o post e retorna array de resposta
-        return $this->http->post('/payments', ['form_params' => $cobranca]);
+        return $this->http->get('/paymentLinks/'.$id,'','DELETE');
     }
 
     /**
