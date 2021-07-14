@@ -105,7 +105,7 @@ $cobranca = $asaas->Cobranca()->estorno(id);
 $cobranca = $asaas->Cobranca()->confirmacao(id);
 
 // Desfazer confirmação de recebimento em dinheiro
-$cobranca = $asaas->Cobranca()->confirmacao(id);
+$cobranca = $asaas->Cobranca()->dezconfirmacao(id);
 
 // Deleta uma cobrança
 $asaas->Cobranca()->delete(123);
