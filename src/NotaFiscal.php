@@ -41,10 +41,10 @@ class NotaFiscal {
     }
 
     public function issueInvoice($id){
-        return $this->http->post('/invoices/'$id.'/authorize', arrat());
+        return $this->http->post('/invoices/'. $id.'/authorize', array());
     }
 
-    public function create($id){
+    public function create($dadosConta){
         return $this->http->post('/invoices', $dadosConta);
     }
 
