@@ -183,6 +183,6 @@ class Cliente
      */
     public function cliente_valid($cliente)
     {
-        return ! ( (empty($cliente['name']) OR empty($cliente['cpfCnpj']) OR empty($cliente['email'])) ? 1 : '' );
+        return ! ( (empty($cliente['name']) OR empty($cliente['cpfCnpj'])) ? 1 : '' );
     }
 }
