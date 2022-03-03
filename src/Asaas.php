@@ -27,6 +27,8 @@ class Asaas {
     public $MinhaConta;
     public $InformacoesFiscais;
     public $ConsultaSerasa;
+    public $Pix;
+    public $Parcelamento;
 
     private $connection;
     
@@ -48,11 +50,23 @@ class Asaas {
         $this->InformacoesFiscais = new InformacoesFiscais($this->connection);
         $this->ConsultaSerasa = new ConsultaSerasa($this->connection);
         $this->webhook     = new Webhook($this->connection);
+        $this->Pix     = new Pix($this->connection);
+        $this->Parcelamento     = new Parcelamento($this->connection);
     }
 
     public function Assinatura(){
         $this->assinatura  = new Assinatura($this->connection);
         return $this->assinatura;
+    }
+
+    public function Pix(){
+        $this->Pix  = new Pix($this->connection);
+        return $this->Pix;
+    }
+
+    public function Parcelamento(){
+        $this->Parcelamento  = new Parcelamento($this->connection);
+        return $this->Parcelamento;
     }
 
     public function Cidade(){

@@ -41,7 +41,7 @@ class NotaFiscal {
     }
 
     public function issueInvoice($id){
-        return $this->http->post('/invoices/'. $id.'/authorize', array());
+        return $this->http->post('/invoices/'.$id.'/authorize', array());
     }
 
     public function create($dadosConta){
@@ -53,7 +53,7 @@ class NotaFiscal {
     }
 
     public function cancel($id){
-        return $this->http->post('/invoices/'.$id.'/cancel', []);
+        return $this->http->post('/invoices/'.$id.'/cancel', array());
     }
 
 }

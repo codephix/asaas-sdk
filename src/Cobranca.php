@@ -87,6 +87,15 @@ class Cobranca {
         return $this->http->get('/payments/'.$id,'','DELETE');
     }
 
+
+
+    // Retorna a listagem de cobranças de acordo com o Id da Assinaturas
+    public function Carner($id){
+        return $this->http->get('/installments/id'.$id);
+    }
+
+
+
     /**
      * Cria um novo boleto no Asaas.
      * @param Array $cliente
