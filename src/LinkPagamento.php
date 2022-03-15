@@ -3,6 +3,7 @@
 namespace CodePhix\Asaas;
 
 use CodePhix\Asaas\Connection;
+use \Exception;
 
 class LinkPagamento {
     public $http;
@@ -14,7 +15,7 @@ class LinkPagamento {
     }
 
     // Retorna a listagem de cobranças
-    public function getAll(array $filtros){
+    public function getAll(array $filtros = []){
         $filtro = '';
         if(is_array($filtros)){
             if($filtros){

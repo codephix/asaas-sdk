@@ -35,10 +35,10 @@ class Antecipacao {
     }
 
     public function create($dadosSolicitacao){
-        return $this->http->post('/anticipations', $dadosConta);
+        return $this->http->post('/anticipations', $dadosSolicitacao);
     }
 
     public function simulate($dadosSolicitacao){
-        return $this->http->post('/anticipations/simulate', $dadosConta);
+        return $this->http->post('/anticipations/simulate', $dadosSolicitacao);
     }
 }

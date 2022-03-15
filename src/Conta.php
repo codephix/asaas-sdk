@@ -2,10 +2,11 @@
 
 namespace CodePhix\Asaas;
 
+use CodePhix\Asaas\Connection;
 
-class Cidades {
-
+class Conta {
     public $http;
+    protected $cobranca;
 
     public function __construct(Connection $connection)
     {
@@ -28,12 +29,17 @@ class Cidades {
                 $filtro = '?'.$filtro;
             }
         }
-        return $this->http->get('/cities'.$filtro);
+        return $this->http->get('/accounts'.$filtro);
     }
 
-    // Retorna os dados da cobrança de acordo com o Id
-    public function getById($id){
-        return $this->http->get('/cities/'.$id);
+    // Retorna a listagem de cobranças
+    public function getConta(){
+        return $this->http->get('/wallets');
+    }
+
+    // Insere uma nova cobrança
+    public function create(array $dadosCobranca){
+        return $this->http->post('/accounts', $dadosCobranca);
     }
 
 }
