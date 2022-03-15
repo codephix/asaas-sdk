@@ -20,7 +20,7 @@ class InformacoesFiscais {
         return $this->http->get('/customerFiscalInfo');
     }
 
-    public function createUpdate($id){
+    public function createUpdate($dadosConta){
         return $this->http->post('/customerFiscalInfo', $dadosConta);
     }
 

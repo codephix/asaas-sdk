@@ -14,7 +14,7 @@ class Notificacao {
     }
 
     // Retorna a listagem de notificações
-    public function getAll(array $filtros){
+    public function getAll(array $filtros = []){
         $filtro = '';
         if(is_array($filtros)){
             if($filtros){
@@ -49,7 +49,7 @@ class Notificacao {
     
     // Atualiza os dados da notificação
     public function update($id, array $dadosNotificacao){
-        return $this->http->post('/notifications', $dadosNotificacao);
+        return $this->http->post('/notifications/'.$id, $dadosNotificacao);
     }
 
     // Deleta uma notificação

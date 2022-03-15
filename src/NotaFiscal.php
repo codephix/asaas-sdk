@@ -53,7 +53,7 @@ class NotaFiscal {
     }
 
     public function cancel($id){
-        return $this->http->post('/invoices/'.$id.'/cancel', array());
+        return $this->http->post('/invoices/'.$id.'/cancel', []);
     }
 
 }

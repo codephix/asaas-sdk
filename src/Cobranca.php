@@ -3,6 +3,7 @@
 namespace CodePhix\Asaas;
 
 use CodePhix\Asaas\Connection;
+use \Exception;
 
 class Cobranca {
     public $http;
@@ -14,7 +15,7 @@ class Cobranca {
     }
 
     // Retorna a listagem de cobranças
-    public function getAll(array $filtros){
+    public function getAll(array $filtros = []){
         $filtro = '';
         if(is_array($filtros)){
             if($filtros){
@@ -60,6 +61,11 @@ class Cobranca {
     // Atualiza os dados da cobrança
     public function update($id, array $dadosCobranca){
         return $this->http->post('/payments/' . $id, $dadosCobranca);
+    }
+
+    // Atualiza os dados da cobrança
+    public function getInfoBoleto($id){
+        return $this->http->post('/payments/'.$id.'/identificationField', []);
     }
 
     // Restaura cobrança removida

@@ -29,6 +29,7 @@ class Asaas {
     public $ConsultaSerasa;
     public $Pix;
     public $Parcelamento;
+    public $Conta;
 
     private $connection;
     
@@ -52,6 +53,7 @@ class Asaas {
         $this->webhook     = new Webhook($this->connection);
         $this->Pix     = new Pix($this->connection);
         $this->Parcelamento     = new Parcelamento($this->connection);
+        $this->Conta     = new Conta($this->connection);
     }
 
     public function Assinatura(){
@@ -132,6 +134,11 @@ class Asaas {
     public function ConsultaSerasa(){
         $this->ConsultaSerasa = new ConsultaSerasa($this->connection);
         return $this->ConsultaSerasa;
+    }
+
+    public function Conta(){
+        $this->Conta = new Conta($this->connection);
+        return $this->Conta;
     }
     
     public function Webhook(){

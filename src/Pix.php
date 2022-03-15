@@ -19,12 +19,11 @@ class Pix {
     {
 
         $resturn = $this->http->get('/payments/'.$id.'/pixQrCode');
-
         if(!empty($resturn->encodedImage)){
             $resturn->success = 1;
             return $resturn;
         }else{
-            return json_encode(array('success' => false));
+            return $resturn;
         }
 
         /*
@@ -76,6 +75,25 @@ class Pix {
         //$response = $this->http->request('GET', $this->base_url . $url);
 
         return $response;
+    }
+
+    // Retorna a listagem de cobranças
+    public function getAll(array $filtros = []){
+        $filtro = '';
+        if(is_array($filtros)){
+            if($filtros){
+                foreach($filtros as $key => $f){
+                    if(!empty($f)){
+                        if($filtro){
+                            $filtro .= '&';
+                        }
+                        $filtro .= $key.'='.$f;
+                    }
+                }
+                $filtro = '?'.$filtro;
+            }
+        }
+        return $this->http->get('/pix/transactions'.$filtro);
     }
 
 }
