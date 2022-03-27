@@ -105,10 +105,29 @@ $cobranca = $asaas->Cobranca()->estorno(id);
 $cobranca = $asaas->Cobranca()->confirmacao(id);
 
 // Desfazer confirmação de recebimento em dinheiro
-$cobranca = $asaas->Cobranca()->confirmacao(id);
+$cobranca = $asaas->Cobranca()->dezconfirmacao(id);
 
 // Deleta uma cobrança
 $asaas->Cobranca()->delete(123);
+```
+
+
+Pix
+------------
+
+Para criar o pix, precisa ser adicionar uma cobrança e com esse id da cobrança será gerado o qrCode do pix, lembrando o qrCode é gerado até as 23:59h do mesmo dia.
+O QrCode vem em base64.
+
+```php
+
+$Pix = $asaas->Pix()->create($id_cobranca);
+if($Pix->success){
+     echo '<img src="data:image/jpeg;base64, '.$Pix->encodedImage.'" />';
+}
+
+//Consulta se foi efetivado o pagamento via Pix, (Obs: Recomendo um post a cada 30s, ou um botão para confirmação do pagamento, assim não sobrecarregado o seu sistema e nem o do asaas ;) ).
+$retorno = $asaas->Pix()->get($id_cobranca);
+
 ```
 
 

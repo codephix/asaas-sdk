@@ -8,12 +8,12 @@
   "authors": [
     {
       "name": "Max Alex",
-      "email": "contato@codephix.com.br",
+      "email": "contato@codephix.com",
       "homepage": "https://www.codephix.com"
     }
   ],
   "require": {
-    "php": "^7.2"
+    "php": "^7.2|^8.0"
   },
   "autoload": {
     "psr-4": {

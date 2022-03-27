@@ -74,17 +74,27 @@ class Cobranca {
 
     // Confirmação em dinheiro
     public function confirmacao($id, $dados){
-        return $this->http->post("/payments/{$id}/receiveInCash", array());
+        return $this->http->post("/payments/{$id}/receiveInCash", $dados);
     }
-    // Confirmação em dinheiro
-    public function dezconfirmacao($id, $dados){
-        return $this->http->post("/payments/{$id}/undoReceivedInCash", array());
+
+    // Desconfirmação em dinheiro
+    public function desconfirmacao($id, $dados){
+        return $this->http->post("/payments/{$id}/undoReceivedInCash", $dados);
     }
 
     // Deleta uma cobrança
     public function delete($id){
         return $this->http->get('/payments/'.$id,'','DELETE');
     }
+
+
+
+    // Retorna a listagem de cobranças de acordo com o Id da Assinaturas
+    public function Carner($id){
+        return $this->http->get('/installments/id'.$id);
+    }
+
+
 
     /**
      * Cria um novo boleto no Asaas.
