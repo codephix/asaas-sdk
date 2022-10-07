@@ -81,6 +81,15 @@ class Cliente
         $option = 'limit=1&email=' . $email;
         return $this->http->get('/customers', $option);
     }
+    
+    
+    //Retorna os dados do cliente de acordo com o CPF/CNPJ
+     public function getByCpf($cpf){
+        $option = '?cpfCnpj=' . $cpf;
+        return $this->http->get('/customers', $option);
+    }
+    
+    
 
     // Insere um novo cliente
     public function create(array $dadosCliente){
