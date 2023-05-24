@@ -3,7 +3,7 @@
 namespace CodePhix\Asaas;
 
 
-class Transferencia {
+class ConsultaSerasa {
 
     public $http;
 
@@ -28,19 +28,15 @@ class Transferencia {
                 $filtro = '?'.$filtro;
             }
         }
-        return $this->http->get('/transfers/'.$filtro);
-        //https://www.asaas.com/api/v3/subscriptions/id/invoices?offset=&limit=&status=
+        return $this->http->get('/creditBureauReport'.$filtro);
     }
 
-    public function consultaSaldo(){
-        return $this->http->get('/finance/getCurrentBalance');
+    public function getBy($id){
+        return $this->http->get('/creditBureauReport/'.$id);
     }
 
-    public function consultaWalletId(){
-        return $this->http->get('/wallets');
+    public function create($dados){
+        return $this->http->post('/creditBureauReport', $dados);
     }
 
-    public function conta($dadosConta){
-        return $this->http->post('/transfers', $dadosConta);
-    }
 }

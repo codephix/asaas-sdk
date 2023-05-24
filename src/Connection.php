@@ -2,6 +2,8 @@
 
 namespace CodePhix\Asaas;
 
+use stdClass;
+
 class Connection {
     public $http;
     public $api_key;
@@ -19,7 +21,6 @@ class Connection {
             die('Tipo de homologação invalida');
         }
         $this->api_key = $token;
-        //$this->api_status = PAYMENT['asaas']['status'];
         $this->base_url = "https://" . (($this->api_status) ? 'sandbox' : 'www');
 
         return $this;
@@ -28,7 +29,6 @@ class Connection {
 
     public function get($url, $option = false, $custom = false )
     {
-
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $this->base_url .'.asaas.com/api/v3'. $url.$option);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
@@ -47,7 +47,12 @@ class Connection {
         curl_close($ch);
         $response = json_decode($response);
 
-        //$response = $this->http->request('GET', $this->base_url . $url);
+        if(empty($response)){
+            $response = new stdClass();
+            $response->error = [];
+            $response->error[0] = new stdClass();
+            $response->error[0]->description = 'Tivemos um problema ao processar a requisição.';
+        }
 
         return $response;
     }
@@ -74,6 +79,13 @@ class Connection {
         curl_close($ch);
         $response = json_decode($response);
 
+        if(empty($response)){
+            $response = new stdClass();
+            $response->error = [];
+            $response->error[0] = new stdClass();
+            $response->error[0]->description = 'Tivemos um problema ao processar a requisição.';
+        }
+        
         return $response;
 
     }

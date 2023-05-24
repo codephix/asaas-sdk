@@ -13,7 +13,7 @@ class Assinatura {
     }
 
     // Retorna a listagem de assinaturas
-    public function getAll(array $filtros){
+    public function getAll(array $filtros = []){
         $filtro = '';
         if(is_array($filtros)){
             if($filtros){
@@ -80,7 +80,7 @@ class Assinatura {
         //https://www.asaas.com/api/v3/subscriptions/id/invoices?offset=&limit=&status=
     }
 
-    public function createNotaFiscal($subscription_id, $dadosAssinatura){
+    public function createNotaFiscal($dadosAssinatura){
 
         return $this->http->post('/subscriptions', $dadosAssinatura);
         //https://www.asaas.com/api/v3/subscriptions/id/invoiceSettings
@@ -89,7 +89,7 @@ class Assinatura {
     // Atualiza Nota Fiscal da assinatura
     public function updateNotaFiscal($subscription_id, $dadosAssinatura){
 
-        return $this->http->post('/subscriptions', $dadosAssinatura);
+        return $this->http->post('/subscriptions/'.$subscription_id, $dadosAssinatura);
         //https://www.asaas.com/api/v3/subscriptions/id/invoiceSettings
     }
 
@@ -101,7 +101,7 @@ class Assinatura {
 
     // Deleta configuração para emissão de Notas Fiscais
     public function deleteConfigNotaFiscal($id){
-        return $this->http->get('/subscriptions/'.$subscription_id.'/invoiceSettings','','DELETE');
+        return $this->http->get('/subscriptions/'.$id.'/invoiceSettings','','DELETE');
     }
 
     // Deleta uma assinatura
