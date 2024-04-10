@@ -9,9 +9,10 @@ use CodePhix\Asaas\Extrato;
 use CodePhix\Asaas\Notificacao;
 use CodePhix\Asaas\Transferencia;
 use CodePhix\Asaas\Webhook;
+use CodePhix\Asaas\WebhookSub;
 
 class Asaas {
-    
+
     public $cidade;
     public $assinatura;
     public $cliente;
@@ -20,6 +21,7 @@ class Asaas {
     public $notificacao;
     public $transferencia;
     public $webhook;
+    public $webhookSub;
     public $antecipacao;
     public $extrato;
     public $pagarconta;
@@ -30,9 +32,10 @@ class Asaas {
     public $Pix;
     public $Parcelamento;
     public $Conta;
+    public $SubConta;
 
     private $connection;
-    
+
     public function __construct($token, $status = false) {
         $this->connection = new Connection($token, ((!empty($status)) ? $status : 'producao'));
 
@@ -51,9 +54,12 @@ class Asaas {
         $this->InformacoesFiscais = new InformacoesFiscais($this->connection);
         $this->ConsultaSerasa = new ConsultaSerasa($this->connection);
         $this->webhook     = new Webhook($this->connection);
+        $this->webhookSub     = new webhookSub($this->connection);
         $this->Pix     = new Pix($this->connection);
         $this->Parcelamento     = new Parcelamento($this->connection);
         $this->Conta     = new Conta($this->connection);
+        $this->SubConta     = new SubConta($this->connection);
+        $this->whitelabel     = new WhiteLabel($this->connection);
     }
 
     public function Assinatura(){
@@ -80,27 +86,27 @@ class Asaas {
         $this->cliente     = new Cliente($this->connection);
         return $this->cliente;
     }
-    
+
     public function Cobranca(){
         $this->cobranca    = new Cobranca($this->connection);
         return $this->cobranca;
     }
-    
+
     public function LinkPagamento(){
         $this->LinkPagamento    = new LinkPagamento($this->connection);
         return $this->LinkPagamento;
     }
-    
+
     public function Notificacao(){
         $this->notificacao = new Notificacao($this->connection);
         return $this->notificacao;
     }
-    
+
     public function Transferencia(){
         $this->transferencia = new Transferencia($this->connection);
         return $this->transferencia;
     }
-    
+
     public function Extrato(){
         $this->extrato = new Extrato($this->connection);
         return $this->extrato;
@@ -140,10 +146,26 @@ class Asaas {
         $this->Conta = new Conta($this->connection);
         return $this->Conta;
     }
-    
+
+    public function SubConta(){
+        $this->SubConta = new SubConta($this->connection);
+        return $this->SubConta;
+    }
+
     public function Webhook(){
         $this->webhook     = new Webhook($this->connection);
         return $this->webhook;
+    }
+
+    public function WebhookSub(){
+        $this->webhookSub     = new WebhookSub($this->connection);
+        return $this->webhookSub;
+    }
+
+    public function WhiteLabel()
+    {
+        $this->whitelabel     = new WhiteLabel($this->connection);
+        return $this->whitelabel;
     }
 
 }

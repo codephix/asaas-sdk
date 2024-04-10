@@ -2,6 +2,7 @@
 
 namespace CodePhix\Asaas;
 
+use GuzzleHttp\Client;
 use stdClass;
 
 class Connection {
@@ -57,11 +58,19 @@ class Connection {
         return $response;
     }
 
-    public function post($url, $params)
+    public function post($url, $params, $archive = false)
     {
-        $params = json_encode($params);
+        $params = $archive ? $params : json_encode($params);
         $ch = curl_init();
+        $options = [];
+        $options[] = "access_token: ".$this->api_key;
 
+        if($archive){
+            $options[] = "Content-Type: multipart/form-data";
+            $options[] = "accept: application/json";
+        }else{
+            $options[] = "Content-Type: application/json";
+        }
         curl_setopt($ch, CURLOPT_URL, $this->base_url .'.asaas.com/api/v3'. $url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
         curl_setopt($ch, CURLOPT_HEADER, FALSE);
@@ -70,10 +79,7 @@ class Connection {
 
         curl_setopt($ch, CURLOPT_POSTFIELDS, $params);
 
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-            "Content-Type: application/json",
-            "access_token: ".$this->api_key
-        ));
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $options);
 
         $response = curl_exec($ch);
         curl_close($ch);
@@ -85,9 +91,9 @@ class Connection {
             $response->error[0] = new stdClass();
             $response->error[0]->description = 'Tivemos um problema ao processar a requisição.';
         }
-        
+
         return $response;
 
     }
-    
+
 }

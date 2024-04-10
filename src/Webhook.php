@@ -2,13 +2,7 @@
 
 namespace CodePhix\Asaas;
 
+class Webhook
+{
 
-class Webhook {
-
-    public $http;
-
-    public function __construct(Connection $connection)
-    {
-        $this->http = $connection;
-    }
 }

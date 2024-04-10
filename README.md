@@ -798,6 +798,91 @@ $MinhaConta = $asaas->MinhaConta()->get();
 $MinhaConta = $asaas->MinhaConta()->getConf();
 
 ```
+Web Hook
+------------
+
+```php
+$dados = array(
+    name => "Web Teste" [string required] [Nome do Web Hook]
+    url => "www.teste.com.br" [string required] [URL que receberá as informações de sincronização]
+    email => "teste@teste.com.br" [string required] [Email para receber as notificações em caso de erros na fila]
+    sendType => 'SEQUENTIALLY/NON_SEQUENTIALLY' [string] [Sequencial (SEQUENTIALLY) ou não sequencial (NON_SEQUENTIALLY)] [Default: SEQUENTIALLY]
+    apiVersion => 3 [int32 required] [Versão utilizada da API. Utilize "3" para a versão v3] [Default: 3]
+    enabled => true/false [boolean required] [Habilitar ou não o webhook]
+    authToken => '123asd123asd' [string] [Token de autenticação]
+    events => ['evento teste', 'evento teste2'] [array required] [Lista dos eventos que este Webhook irá observar]
+)
+$dados2 = array(
+    name => "Web Teste" [string required] [Nome do Web Hook]
+    url => "www.teste.com.br" [string required] [URL que receberá as informações de sincronização]
+    email => "teste@teste.com.br" [string required] [Email para receber as notificações em caso de erros na fila]
+    sendType => 'SEQUENTIALLY/NON_SEQUENTIALLY' [string] [Sequencial (SEQUENTIALLY) ou não sequencial (NON_SEQUENTIALLY)] [Default: SEQUENTIALLY]
+    apiVersion => 3 [int32 required] [Versão utilizada da API. Utilize "3" para a versão v3] [Default: 3]
+    enabled => true/false [boolean required] [Habilitar ou não o webhook]
+    authToken => '123asd123asd' [string] [Token de autenticação]
+    events => ['evento teste', 'evento teste2'] [array required] [Lista dos eventos que este Webhook irá observar]
+)
+$web = $asaas->WebhookSub();
+$webhook = $web->addInstace(array $dados, interrupted => false); [FirstParam required, SecondParam default true]
+$webhook = $web->addInstace(array $dados2, interrupted => false); [FirstParam required, SecondParam default true]
+$webhooksub = $webhook->getWebHookArray();
+```
+
+
+Sub Conta
+------------
+
+```php
+//Criando uma sub conta
+$dados = array(
+    name => "Exemplo" [string required] [Nome da subconta]
+    email => "exemplo@gmail.com" [string required] [Email da subconta]
+    loginEmail => "exemplo2@gmail.com" [string] [Email para login da subconta, caso não informado será utilizado o email da subconta]
+    cpfCnpj => "00000000000 || 00000000000000" [string required] [CPF ou CNPJ do proprietário da subconta]
+    birthDate => "2000-12-30" [string] [Data de Nascimento]
+    companyType => "MEI; LIMITED; INDIVIDUAL; ASSOCIATION" [string] [Tipo da empresa (somente quando Pessoa Jurídica)]
+    phone => "11 11111111" [string] [Fone fixo]
+    mobilePhone => "11 111111111" [string required] [Fone celular]
+    site => "www.exemplo.com.br" [string] [enviar URL referente ao site da conta filha]
+    incomeValue => 123412 [number required] [Faturamento/Renda mensal]
+    address => "Rua Endereço" [string required] [Logradouro]
+    addressNumber => "999" [string required] [Número do endereço]
+    complement => "casa" [string] [Complemento do endereço]
+    province => "centro" [string required] [Bairro]
+    postalCode => "88888888" [string required] [CEP do endereço]
+    webhooks => $webhook->getWebHookArray() [array of objects] [class WebHook]
+);
+$MinhaConta = $asaas->SubConta();
+$MinhaConta->create($dados);
+
+$dados = array(
+
+"cpfCnpj" => '00000000000000 | 000000000' [string] [Filtrar pelo cpf ou cnpj da subconta]
+"email" => 'exemplodeUso@gm.com' [string] [Filtrar pelo email da subconta]
+"name" => 'NomeDaConta' [string] [Filtrar pelo nome da subconta]
+"walletId" => '1231231a12-123asdasd1-asdasdasd123asd-123asd13ads' [string] [Filtrar pelo walletId da subconta]
+"offset" => 1 [integer] [Elemento inicial da lista]
+"limit" => 100 [integer] [Número de elementos da lista (max: 100)]
+);
+
+$MinhaConta = $asaas->SubConta()->getAll($dados);
+```
+
+White Label
+------------
+
+
+```php
+$wl = $asaas->WhiteLabel();
+$fileExample = file_get_contents(public_path('img/jumbo.png'));
+$dados = [
+"documentFile" => $fileExample [Arquivo required],
+"type" => "IDENTIFICATION" [string required] [Tipo de documento: IDENTIFICATION, SOCIAL_CONTRACT, ENTREPRENEUR_REQUIREMENT, MINUTES_OF_ELECTION, CUSTOM]
+];
+$id = '21313231213213232' [string required] [Identificador único do documento]
+$wl->create($id, $dados)
+```
+
 
 Notificações
 ------------
