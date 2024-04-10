@@ -876,9 +876,10 @@ White Label
 $wl = $asaas->WhiteLabel();
 $fileExample = file_get_contents(public_path('img/jumbo.png'));
 $dados = [
-"documentFile" => $fileExample [Arquivo required],
+"documentFile" => new CURLFile($filePath) [Arquivo required],
 "type" => "IDENTIFICATION" [string required] [Tipo de documento: IDENTIFICATION, SOCIAL_CONTRACT, ENTREPRENEUR_REQUIREMENT, MINUTES_OF_ELECTION, CUSTOM]
 ];
+
 $id = '21313231213213232' [string required] [Identificador único do documento]
 $wl->create($id, $dados)
 ```
