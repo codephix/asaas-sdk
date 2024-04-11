@@ -27,6 +27,40 @@ class WhiteLabel
             return 'Id do arquivo não informado!';
         }
 
-        return $this->http->post('/myAccount/documents/'.$id, $dados);
+        return $this->http->post('/myAccount/documents/'.$id, $dados, true);
+    }
+
+    public function pendentes()
+    {
+        return $this->http->get('/myAccount/documents');
+    }
+
+    public function getDocument(string $id)
+    {
+        return $this->http->get('/myAccount/documents/files/'.$id);
+    }
+
+    public function update(string $id, array $dados)
+    {
+        if(is_null($dados)){
+            return 'Dados não identificados!';
+        }
+        if(is_null($id)){
+            return 'Id do arquivo não informado!';
+        }
+
+        return $this->http->post('/myAccount/documents/files/'.$id, $dados, true);
+    }
+
+    public function delete(string $id)
+    {
+        if(is_null($dados)){
+            return 'Dados não identificados!';
+        }
+        if(is_null($id)){
+            return 'Id do arquivo não informado!';
+        }
+
+        return $this->http->get('/myAccount/documents/files/'.$id, '', 'DELETE');
     }
 }

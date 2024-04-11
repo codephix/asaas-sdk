@@ -881,7 +881,11 @@ $dados = [
 ];
 
 $id = '21313231213213232' [string required] [Identificador único do documento]
-$wl->create($id, $dados)
+$wl->create($id, $dados) [Mandando arquivos via white label]
+$wl->pendentes() [Recebe uma lista dos arquivos e status deles]
+$wl->getDocument($id) [Visualiza o documento enviado e o status dele]
+$wl->update($id, $dados) [Atualiza o arquivo via white label]
+$wl->delete($id) [Deleta o arquivo via white label]
 ```
 
 
