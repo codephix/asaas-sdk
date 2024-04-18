@@ -2,10 +2,11 @@
 
 namespace CodePhix\Asaas\Exceptions;
 
-class ClienteException {
+class ClienteException
+{
 
-    public static function invalidClient()
-    {
-        return array('error'=>'Os dados Obrigatorio são Nome, Cpf\Cnpj, E-mail, Os dados fornecidos para o cadastro do cliente não são válidos.');
-    }
+  public static function invalidClient()
+  {
+    return array('error' => 'Os dados obrigatórios são Nome e Cpf\Cnpj. Os dados fornecidos para o cadastro do cliente não são válidos.');
+  }
 }
