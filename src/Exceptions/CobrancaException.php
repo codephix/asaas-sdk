@@ -12,7 +12,12 @@ namespace CodePhix\Asaas\Exceptions;
  * Description of CobrancaException
  *
  * @author Rafael
+ * @author Lucas G. Bueno
  */
-class CobrancaException {
-    //put your code here
+class CobrancaException
+{
+    public static function invalidCobranca()
+    {
+        return array("error" => "Dados inválidos! Os dados obrigatórios são customer(cliente), billingType(forma de pgto), value(valor), dueDate(vencimento)");
+    }
 }
