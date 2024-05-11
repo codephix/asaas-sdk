@@ -9,6 +9,7 @@ use FernandoEbert\Asaas\Extrato;
 use FernandoEbert\Asaas\Notificacao;
 use FernandoEbert\Asaas\Transferencia;
 use FernandoEbert\Asaas\Webhook;
+use FernandoEbert\Asaas\CreditCard;
 
 class Asaas {
     
@@ -30,6 +31,7 @@ class Asaas {
     public $Pix;
     public $Parcelamento;
     public $Conta;
+    public $creditCard;
 
     private $connection;
     
@@ -54,11 +56,17 @@ class Asaas {
         $this->Pix     = new Pix($this->connection);
         $this->Parcelamento     = new Parcelamento($this->connection);
         $this->Conta     = new Conta($this->connection);
+        $this->creditCard     = new CreditCard($this->connection);
     }
 
     public function Assinatura(){
         $this->assinatura  = new Assinatura($this->connection);
         return $this->assinatura;
+    }
+
+    public function creditCard(){
+        $this->creditCard = new CreditCard($this->connection);
+        return $this->creditCard;
     }
 
     public function Pix(){
