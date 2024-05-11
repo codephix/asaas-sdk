@@ -1,14 +1,14 @@
 <?php
 
-namespace CodePhix\Asaas;
+namespace FernandoEbert\Asaas;
 
-use CodePhix\Asaas\Assinatura;
-use CodePhix\Asaas\Cliente;
-use CodePhix\Asaas\Cobranca;
-use CodePhix\Asaas\Extrato;
-use CodePhix\Asaas\Notificacao;
-use CodePhix\Asaas\Transferencia;
-use CodePhix\Asaas\Webhook;
+use FernandoEbert\Asaas\Assinatura;
+use FernandoEbert\Asaas\Cliente;
+use FernandoEbert\Asaas\Cobranca;
+use FernandoEbert\Asaas\Extrato;
+use FernandoEbert\Asaas\Notificacao;
+use FernandoEbert\Asaas\Transferencia;
+use FernandoEbert\Asaas\Webhook;
 
 class Asaas {
     

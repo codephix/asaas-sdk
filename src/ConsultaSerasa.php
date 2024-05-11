@@ -1,6 +1,6 @@
 <?php
 
-namespace CodePhix\Asaas;
+namespace FernandoEbert\Asaas;
 
 
 class ConsultaSerasa {

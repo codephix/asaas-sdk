@@ -29,7 +29,7 @@ Exemplo
 
 require 'vendor/autoload.php';
 
-use CodePhix\Asaas\Asaas;
+use FernandoEbert\Asaas\Asaas;
 
 // Instancie o cliente Asaas usando a instância do adapter previamente criada.
 $asaas = new Asaas('seu_token_de_acesso');

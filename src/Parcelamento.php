@@ -1,8 +1,8 @@
 <?php
 
-namespace CodePhix\Asaas;
+namespace FernandoEbert\Asaas;
 
-use CodePhix\Asaas\Connection;
+use FernandoEbert\Asaas\Connection;
 
 class Parcelamento
 {
