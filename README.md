@@ -18,7 +18,7 @@ SDK não-oficial de integração á API do serviço www.asaas.com
 ## Installation
 
 ```bash
-composer require codephix/asaas-sdk
+composer require FernandoEbert/asaas-sdk
 ```
 
 Exemplo
