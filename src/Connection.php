@@ -35,6 +35,7 @@ class Connection
         curl_setopt($ch, CURLOPT_URL, $this->base_url . '/v3' . $url . $option);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
         curl_setopt($ch, CURLOPT_HEADER, FALSE);
+        curl_setopt($ch, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT']);
 
 
         if (empty($this->headers)) {
