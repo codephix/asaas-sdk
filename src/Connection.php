@@ -28,7 +28,6 @@ class Connection
         return $this;
     }
 
-
     public function get($url, $option = false, $custom = false)
     {
         $ch = curl_init();
@@ -37,6 +36,7 @@ class Connection
         curl_setopt($ch, CURLOPT_HEADER, FALSE);
         curl_setopt($ch, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT']);
 
+        curl_setopt($ch, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT']);
 
         if (empty($this->headers)) {
             $this->headers = array(
@@ -76,7 +76,7 @@ class Connection
         curl_setopt($ch, CURLOPT_POST, TRUE);
 
         curl_setopt($ch, CURLOPT_POSTFIELDS, $params);
-        
+
         curl_setopt($ch, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT']);
 
         curl_setopt($ch, CURLOPT_HTTPHEADER, array(
