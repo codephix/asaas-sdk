@@ -35,7 +35,7 @@ class Connection
         curl_setopt($ch, CURLOPT_URL, $this->base_url . '/v3' . $url . $option);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
         curl_setopt($ch, CURLOPT_HEADER, FALSE);
-        curl_setopt($ch, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT']);
+        curl_setopt($ch, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT'] ?? 'Unknown');
 
 
         if (empty($this->headers)) {
@@ -77,7 +77,7 @@ class Connection
 
         curl_setopt($ch, CURLOPT_POSTFIELDS, $params);
         
-        curl_setopt($ch, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT']);
+        curl_setopt($ch, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT'] ?? 'Unknown');
 
         curl_setopt($ch, CURLOPT_HTTPHEADER, array(
             "Content-Type: application/json",
