@@ -9,7 +9,6 @@ use FernandoEbert\Asaas\Extrato;
 use FernandoEbert\Asaas\Notificacao;
 use FernandoEbert\Asaas\Transferencia;
 use FernandoEbert\Asaas\Webhook;
-use FernandoEbert\Asaas\CreditCard;
 
 class Asaas {
     
@@ -23,6 +22,7 @@ class Asaas {
     public $webhook;
     public $antecipacao;
     public $extrato;
+    public $finance;
     public $pagarconta;
     public $NotaFiscal;
     public $MinhaConta;
@@ -31,7 +31,6 @@ class Asaas {
     public $Pix;
     public $Parcelamento;
     public $Conta;
-    public $creditCard;
 
     private $connection;
     
@@ -46,6 +45,7 @@ class Asaas {
         $this->notificacao = new Notificacao($this->connection);
         $this->transferencia = new Transferencia($this->connection);
         $this->extrato = new Extrato($this->connection);
+        $this->finance = new Finance($this->connection);
         $this->antecipacao = new Antecipacao($this->connection);
         $this->pagarconta = new PagarConta($this->connection);
         $this->NotaFiscal = new NotaFiscal($this->connection);
@@ -56,17 +56,11 @@ class Asaas {
         $this->Pix     = new Pix($this->connection);
         $this->Parcelamento     = new Parcelamento($this->connection);
         $this->Conta     = new Conta($this->connection);
-        $this->creditCard     = new CreditCard($this->connection);
     }
 
     public function Assinatura(){
         $this->assinatura  = new Assinatura($this->connection);
         return $this->assinatura;
-    }
-
-    public function creditCard(){
-        $this->creditCard = new CreditCard($this->connection);
-        return $this->creditCard;
     }
 
     public function Pix(){
@@ -112,6 +106,15 @@ class Asaas {
     public function Extrato(){
         $this->extrato = new Extrato($this->connection);
         return $this->extrato;
+    }
+
+    public function finance(){
+        $this->finance = new Finance($this->connection);
+        return $this->finance;
+    }
+
+    public function InformacoesFinanceiras(){
+        return $this->finance();
     }
 
     public function Antecipacao(){
