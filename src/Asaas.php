@@ -11,7 +11,7 @@ use CodePhix\Asaas\Transferencia;
 use CodePhix\Asaas\Webhook;
 
 class Asaas {
-    
+
     public $cidade;
     public $assinatura;
     public $cliente;
@@ -30,9 +30,11 @@ class Asaas {
     public $Pix;
     public $Parcelamento;
     public $Conta;
+    public $Finance;
+    public $SubContas;
 
     private $connection;
-    
+
     public function __construct($token, $status = false) {
         $this->connection = new Connection($token, ((!empty($status)) ? $status : 'producao'));
 
@@ -54,6 +56,8 @@ class Asaas {
         $this->Pix     = new Pix($this->connection);
         $this->Parcelamento     = new Parcelamento($this->connection);
         $this->Conta     = new Conta($this->connection);
+        $this->Finance     = new Finance($this->connection);
+        $this->SubContas     = new SubContas($this->connection);
     }
 
     public function Assinatura(){
@@ -80,27 +84,27 @@ class Asaas {
         $this->cliente     = new Cliente($this->connection);
         return $this->cliente;
     }
-    
+
     public function Cobranca(){
         $this->cobranca    = new Cobranca($this->connection);
         return $this->cobranca;
     }
-    
+
     public function LinkPagamento(){
         $this->LinkPagamento    = new LinkPagamento($this->connection);
         return $this->LinkPagamento;
     }
-    
+
     public function Notificacao(){
         $this->notificacao = new Notificacao($this->connection);
         return $this->notificacao;
     }
-    
+
     public function Transferencia(){
         $this->transferencia = new Transferencia($this->connection);
         return $this->transferencia;
     }
-    
+
     public function Extrato(){
         $this->extrato = new Extrato($this->connection);
         return $this->extrato;
@@ -140,7 +144,7 @@ class Asaas {
         $this->Conta = new Conta($this->connection);
         return $this->Conta;
     }
-    
+
     public function Webhook(){
         $this->webhook     = new Webhook($this->connection);
         return $this->webhook;

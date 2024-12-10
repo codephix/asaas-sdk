@@ -96,4 +96,26 @@ class Pix {
         return $this->http->get('/pix/transactions'.$filtro);
     }
 
+    public function getAllAddressKeys(?array $filtros = []){
+        $filtros = ((!empty($filtros)) ? http_build_query($filtros) : '');
+        return $this->http->get('/pix/addressKeys?'.$filtros);
+    }
+
+    public function getKeys($id){
+        return $this->http->get('/pix/addressKeys/'.$id);
+    }
+
+    public function addressKeys($type = 'EVP'){
+        $dados = [
+            'type' => $type,
+        ];
+        return $this->http->post('/pix/addressKeys',$dados);
+    }
+    public function deleteKeys($id){
+        return $this->http->delete('/pix/addressKeys/'.$id);
+    }
+    public function qrCodeStatic(?array $dados){
+        return $this->http->post('/pix/qrCodes/static',$dados);
+    }
+
 }

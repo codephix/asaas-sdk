@@ -12,26 +12,6 @@ class Transferencia {
         $this->http = $connection;
     }
 
-
-    public function getAll($parametos = false){
-        $filtro = '';
-        if(is_array($parametos)){
-            if($parametos){
-                foreach($parametos as $key => $f){
-                    if(!empty($f)){
-                        if($filtro){
-                            $filtro .= '&';
-                        }
-                        $filtro .= $key.'='.$f;
-                    }
-                }
-                $filtro = '?'.$filtro;
-            }
-        }
-        return $this->http->get('/transfers/'.$filtro);
-        //https://www.asaas.com/api/v3/subscriptions/id/invoices?offset=&limit=&status=
-    }
-
     public function consultaSaldo(){
         return $this->http->get('/finance/getCurrentBalance');
     }
@@ -42,5 +22,29 @@ class Transferencia {
 
     public function conta($dadosConta){
         return $this->http->post('/transfers', $dadosConta);
+    }
+
+    public function getAll(?array $parametos = []){
+        $filtro = ((!empty($parametos)) ? http_build_query($parametos) : '');
+        return $this->http->get('/transfers?'.$filtro);
+    }
+
+    public function newTransfers($dados){
+        return $this->http->post('/transfers', $dados);
+    }
+
+    public function newTransfersAsaas(?float $value, ?String $walletId){
+        $dados = [
+            'value' => $value,
+            'walletId' => $walletId
+        ];
+        return $this->http->post('/transfers/', $dados);
+    }
+
+    public function getByTransferId($id){
+        return $this->http->get('/transfers/'.$id);
+    }
+    public function cancelTransfer($id){
+        return $this->http->delete('/transfers/'.$id.'/cancel');
     }
 }

@@ -192,4 +192,3 @@ class Cliente
     return !((empty($cliente['name']) or empty($cliente['cpfCnpj'])) ? 1 : '');
   }
 }
-
