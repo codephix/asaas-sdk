@@ -118,6 +118,7 @@ class Connection
         CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
         CURLOPT_CUSTOMREQUEST => 'PUT',
         CURLOPT_POSTFIELDS => $params,
+        CURLOPT_USERAGENT => $_SERVER['HTTP_USER_AGENT'] ?? 'Unknown',
         CURLOPT_HTTPHEADER => array(
             'Content-Type: application/json',
             'Accept: application/json',
@@ -153,6 +154,7 @@ class Connection
           CURLOPT_FOLLOWLOCATION => true,
           CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
           CURLOPT_CUSTOMREQUEST => 'DELETE',
+          CURLOPT_USERAGENT => $_SERVER['HTTP_USER_AGENT'] ?? 'Unknown',
           CURLOPT_HTTPHEADER => array(
             'Accept: application/json',
             'access_token: '. $this->api_key
